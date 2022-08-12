@@ -37,7 +37,7 @@ namespace WishList.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterViewModel  model)
+        public IActionResult Register(RegisterViewModel  model)
         {
             if(ModelState.IsValid)
             {
@@ -45,14 +45,16 @@ namespace WishList.Controllers
                 appUser.Email = model.Email;
                 appUser.UserName = model.Email;
                 appUser.PasswordHash = model.Password;
-                var Result =await  _userManager.CreateAsync(appUser);
-                if(!Result.Succeeded)
+                var result = _userManager.CreateAsync(appUser).Result;
+                if(!result.Succeeded)
                 {
-                    Result.Errors.ToList().ForEach(error=>{
+                    result.Errors.ToList().ForEach(error=>{
                         ModelState.AddModelError(model.Password, error.Description);
                     });
+                    return View("Register", model);
                 }
-                return RedirectToAction("Index", "Home");
+                else {
+                    return RedirectToAction("Index", "Home"); }
             }
             else
             {
