@@ -9,6 +9,7 @@ using WishList.Models;
 
 namespace WishList.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -20,7 +21,7 @@ namespace WishList.Controllers
             _signInManager = signinManager;
         }
 
-        [Authorize]
+
         public IActionResult Index()
         {
             return View();
