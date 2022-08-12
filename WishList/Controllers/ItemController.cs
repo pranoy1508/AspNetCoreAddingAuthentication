@@ -49,8 +49,10 @@ namespace WishList.Controllers
             {
                 _context.Items.Remove(item);
                 _context.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            else return Unauthorized();
+
         }
     }
 }
