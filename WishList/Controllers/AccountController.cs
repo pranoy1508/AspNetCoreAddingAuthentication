@@ -46,8 +46,7 @@ namespace WishList.Controllers
             var appUser = new ApplicationUser();
             appUser.Email = model.Email;
             appUser.UserName = model.Email;
-            appUser.PasswordHash = model.Password;
-            var result = _userManager.CreateAsync(appUser).Result;
+            var result = _userManager.CreateAsync(appUser,model.Password).Result;
             if (!result.Succeeded)
             {
                 result.Errors.ToList().ForEach(error =>
